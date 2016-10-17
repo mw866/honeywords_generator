@@ -1,4 +1,4 @@
-# cs5435_hw3
+# CS 5435: Security and Privacy Concepts in the Wild Homework #3
 ## Attempts
 * frequency analysis
 * character position based syntax
