@@ -21,27 +21,41 @@ def generate(filename, n):
 			specialBlock = []
 			for char in realpasswd:
 				if char in ALPHABET:
+					# with some probabilities to change char to lower/upper
+					if random.random() < 0.2:
+						char = char.lower()
+					elif random.random() < 0.1:
+						char = char.upper()
 					charBlock.append(char)
 				elif char in string.digits:
-					digitBlock.append(char)
+					# with some probabilities to change char to random digit
+					if random.random() < 0.8:
+						digitBlock.append(char)
+					else:
+						digitBlock.append(random.choice(list('0123456789')))
 				else:
 					specialBlock.append(char)
+				
 			# shuffle each block
-			random.shuffle(charBlock)
-			random.shuffle(digitBlock)
+			if random.random() < 0.1:
+				random.shuffle(charBlock)
+			# if p set too low for digitBlock shuffling, it's likely to produce repeated sweetword
+			if random.random() < 0.85:
+				random.shuffle(digitBlock)
 			random.shuffle(specialBlock)
 			
-			# shuffle the position of each block
+			# shuffle the position of each block with given probability
 			stringBlocks = [charBlock, digitBlock, specialBlock]
-			random.shuffle(stringBlocks)
+			if random.random() < 0.7:
+				random.shuffle(stringBlocks)
 			sweetword = ''.join(stringBlocks[0] + stringBlocks[1] + stringBlocks[2])
-
+			
 			if sweetword == realpasswd or sweetword in sweetwordset:
 				# if sweetword is repeated, randomly generate a new one
-				if random.choice([True, False]):
+				if random.random() < 0.85:
 					charSet = ALPHABET + string.digits
 				else:
-					charSet = ALPHABET + string.digits + '!@#$%^&*()'
+					charSet = ALPHABET + string.digits + '!@#$%&*'
 				sweetword = ''.join(random.choice(charSet) for _ in range(len(realpasswd)))
 			sweetwordset.append(sweetword)
 		sweetwordsets.append(sweetwordset)
