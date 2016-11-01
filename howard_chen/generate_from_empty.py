@@ -5,12 +5,21 @@ import string
 
 ALPHABET = string.ascii_uppercase + string.ascii_lowercase
 
-def generate(filename, n):
-	realpasswds = []
+
+def load_file(filename):
+	passwds = []
 	with open(filename) as f:
 		for line in f:
-			realpasswds.append(line.strip())
+			passwds.append(line.strip())
+	return passwds
 
+
+def generate(realpasswds, n):
+	''' (List[str], int) -> List[List[str]]
+	Usage: To call generate() for one single realpasswd, use
+	       sweetword = generate([realpasswd], 1)[0][0]
+	       sweetword is the permutation of realpasswd
+	'''
 	sweetwordsets = []
 	for realpasswd in realpasswds:
 		sweetwordset = []
@@ -50,13 +59,14 @@ def generate(filename, n):
 				random.shuffle(stringBlocks)
 			sweetword = ''.join(stringBlocks[0] + stringBlocks[1] + stringBlocks[2])
 			
-			if sweetword == realpasswd or sweetword in sweetwordset:
-				# if sweetword is repeated, randomly generate a new one
-				if random.random() < 0.85:
-					charSet = ALPHABET + string.digits
-				else:
-					charSet = ALPHABET + string.digits + '!@#$%&*'
-				sweetword = ''.join(random.choice(charSet) for _ in range(len(realpasswd)))
+			while sweetword == realpasswd or sweetword in sweetwordset:
+#				# if sweetword is repeated, with some probability just generate a random password
+#				if random.random() < 0.1:
+#					charSet = ALPHABET + string.digits
+#					sweetword = ''.join(random.choice(charSet) for _ in range(len(realpasswd)))
+#					break
+				# recursively call generate() until the sweetword is not in the set and not equal to realpassword
+				sweetword = generate([realpasswd], 1)[0][0]
 			sweetwordset.append(sweetword)
 		sweetwordsets.append(sweetwordset)
 	return sweetwordsets
@@ -73,7 +83,9 @@ def main():
 	n = int(sys.argv[1])
 	filename = sys.argv[2]
 	outFilename = sys.argv[3]
-	sweetwordsets = generate(filename, n)
+
+	realpasswds = load_file(filename)
+	sweetwordsets = generate(realpasswds, n)
 	write_file(sweetwordsets, outFilename)
 
 
