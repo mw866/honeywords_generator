@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#! /usr/local/bin/python
 # gen.py
 # password generation program (intended for generating ``honeywords'')
 # Ronald L. Rivest and Ari Juels
@@ -274,5 +274,6 @@ def main():
 # cProfile.run("main()")
 
 main()
+
 
 
