@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+'''
+Strategy for generate_from_empty.py:
+- loop through the input real passwords
+- seperate them into 3 categories: char, digit, special
+- with some randomness, lower/upper case the character
+- with some randomness, substitute the digit with random digit
+- shuffle each block
+- shuffle block position
+- if sweetword exists in the generated set or equal to real password,
+  run the same procedure again
+'''
+
 import sys
 import random
 import string
