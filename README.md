@@ -1,6 +1,9 @@
 
 # CS 5435: Security and Privacy Concepts in the Wild Homework #3
 
+## Github Repo (Private)
+https://github.com/mw866/cs5435_hw3.git
+
 ## Instructions
 
 Due to the Github size restriction, please first unzip the full.zip to extract full.txt (Full RockYou records) .
