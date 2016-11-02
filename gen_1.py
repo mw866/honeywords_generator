@@ -57,25 +57,27 @@ def generate(realpasswds, n):
 					digitBlock.append(random.choice(list('0123456789')))
 				else:
 					specialBlock.append(char)
-				
-			# shuffle each block
-			if random.random() < 0.05:
-				random.shuffle(charBlock)
 
 			#make digit block randomly 1234
-			if (digitBlock and random.random() < 0.7) or (not digitBlock and not specialBlock and random.random() < 0.7):
-				digitBlock = random.choice([['1234'],['666'], [''], ['1'], ['2'], ['123'],['69'], ['321'], ['000']])
-				if random.random() < 0.5:
-					digitBlock = ['19']
-					digitBlock.append(random.choice(list('0123456789')))
-					digitBlock.append(random.choice(list('0123456789')))
-				elif random.random() < 0.5:
-					digitBlock = ['20']
-					digitBlock.append(random.choice(list('01')))
-					digitBlock.append(random.choice(list('0123456789')))
+			if random.random() < 0.7:
+				nineties = ['19']
+				nineties.append(random.choice(list('0123456789')))
+				nineties.append(random.choice(list('0123456789')))
+			
+				twenties = ['20']
+				twenties.append(random.choice(list('01')))
+				twenties.append(random.choice(list('0123456789')))
+
+				digitBlock = random.choice([['1234'],['666'], ['1'], ['2'], ['123'],['69'], ['321'], ['000'], nineties, twenties])
+
+			#totally strip digits 15% of the time, but less so when the real password doesn't have digits
+			if digitBlock and random.random() < 0.15:
+				digitBlock = ['']
+			elif not digitBlock and random.random() < 0.05:
+				digitBlock = ['']
 
 
-			#Lowercase entire password
+			#lowercase entire password
 			if charBlock and random.random() < 0.2:
 				charBlock = [char.lower() for char in charBlock]
 
