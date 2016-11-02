@@ -7,7 +7,7 @@ import gen_1
 
 def read_infile(filename):
     infile_list = [ ]
-    lines = open(filename,"r",errors='ignore').readlines()
+    lines = open(filename,"r").readlines()
     for line in lines:
         infile_list.extend( line.split() )
     return infile_list
@@ -31,19 +31,16 @@ def generate_sweet_dict( n, real_list, train_list):
 
 def write_file(sweet_dict, sweet_filename):
     with open(sweet_filename, 'w') as f:
-        for real, sweet_list in sweet_dict.items():
+        real_sweet_list_tuple = sweet_dict.items()
+        random.shuffle(real_sweet_list_tuple)
+
+        for real, sweet_list in real_sweet_list_tuple:
             f.write(','.join(sweet_list))
             f.write('\n')
+            print(real, '==>', sweet_list)
 
 def generate(n ,real_filename, sweet_filename, train_filename):
     real_list = read_infile(real_filename)
     train_list = read_infile(train_filename)
-    sweet_dict = generate_sweet_dict(n, real_list, train_list)     # generate passwords
-
-    #random.shuffle(sweet_dict)     # shuffle their order
-
-    print("Real Password\t\tSweet Passwords")
-    for real, sweet_list in sweet_dict.items():
-        print(real, '\t\t', sweet_list)
-    
+    sweet_dict = generate_sweet_dict(n, real_list, train_list)     # generate passwords  
     write_file(sweet_dict, sweet_filename)
