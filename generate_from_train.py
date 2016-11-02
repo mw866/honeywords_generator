@@ -6,11 +6,19 @@ import gen_1
 
 
 def read_infile(filename):
+
     infile_list = [ ]
-    lines = open(filename,"r").readlines()
-    for line in lines:
-        infile_list.extend( line.split() )
-    return infile_list
+    try:
+        lines = open(filename,"r").readlines()
+        for line in lines:
+            infile_list.extend( line.split() )
+    except FileNotFoundError:
+        print("[Error] T-set missing: Please clone the complete code with T-sets from https://github.com/mw866/cs5435_hw3.git \n")
+        sys.exit(1)
+    else:
+        return infile_list
+
+
 
 def generate_sweet_dict( n, real_list, train_list):
     sweet_dict = {}
