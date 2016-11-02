@@ -19,7 +19,7 @@ def read_infile(filename):
         return infile_list
 
 
-
+# # of sweetwords, passwords, training list
 def generate_sweet_dict( n, real_list, train_list):
     sweet_dict = {}
     for real in real_list:
@@ -32,7 +32,7 @@ def generate_sweet_dict( n, real_list, train_list):
                     sweet_list.append(sweet)
                     i = i + 1
             sweet_dict[real]=sweet_list           
-        else: #generate from emtply train
+        else: #generate from empty train
             sweet_list = gen_1.generate([real], n)[0]
             sweet_dict[real] = sweet_list
     return sweet_dict
@@ -47,8 +47,9 @@ def write_file(sweet_dict, sweet_filename):
             f.write('\n')
             print(real, '==>', sweet_list)
 
+# # of sweetwords, passwords, output file, training list
 def generate(n ,real_filename, sweet_filename, train_filename):
-    real_list = read_infile(real_filename)
-    train_list = read_infile(train_filename)
+    real_list = read_infile(real_filename) #given passwords
+    train_list = read_infile(train_filename) 
     sweet_dict = generate_sweet_dict(n, real_list, train_list)     # generate passwords  
     write_file(sweet_dict, sweet_filename)

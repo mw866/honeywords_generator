@@ -43,32 +43,54 @@ def generate(realpasswds, n):
 			for char in realpasswd:
 				if char in ALPHABET:
 					# with some probabilities to change char to lower/upper
-					if random.random() < 0.2:
-						char = char.lower()
-					elif random.random() < 0.1:
-						char = char.upper()
+					#if random.random() < 0.2:
+					#	char = char.lower()
+					#elif random.random() < 0.1:
+					#	char = char.upper()
 					charBlock.append(char)
 				elif char in string.digits:
 					# with some probabilities to change char to random digit
-					if random.random() < 0.8:
-						digitBlock.append(char)
-					else:
-						digitBlock.append(random.choice(list('0123456789')))
+					#if random.random() < 0.8:
+						#digitBlock.append(char)
+					#else:
+			
+					digitBlock.append(random.choice(list('0123456789')))
 				else:
 					specialBlock.append(char)
 				
 			# shuffle each block
-			if random.random() < 0.1:
+			if random.random() < 0.05:
 				random.shuffle(charBlock)
-			# if p set too low for digitBlock shuffling, it's likely to produce repeated sweetword
-			if random.random() < 0.85:
-				random.shuffle(digitBlock)
+
+			#make digit block randomly 1234
+			if (digitBlock and random.random() < 0.7) or (not digitBlock and not specialBlock and random.random() < 0.7):
+				digitBlock = random.choice([['1234'],['666'], [''], ['1'], ['2'], ['123'],['69'], ['321'], ['000']])
+				if random.random() < 0.5:
+					digitBlock = ['19']
+					digitBlock.append(random.choice(list('0123456789')))
+					digitBlock.append(random.choice(list('0123456789')))
+				elif random.random() < 0.5:
+					digitBlock = ['20']
+					digitBlock.append(random.choice(list('01')))
+					digitBlock.append(random.choice(list('0123456789')))
+
+
+			#Lowercase entire password
+			if charBlock and random.random() < 0.2:
+				charBlock = [char.lower() for char in charBlock]
+
+			#flip capitalization of first letter
+			if charBlock and random.random() < 0.5:
+				charBlock = [char.lower() for char in charBlock]
+				charBlock[0] = charBlock[0].upper()
+
+			#Randomly shuffle the special characters
 			random.shuffle(specialBlock)
 			
 			# shuffle the position of each block with given probability
 			stringBlocks = [charBlock, digitBlock, specialBlock]
-			if random.random() < 0.7:
-				random.shuffle(stringBlocks)
+			#if random.random() < 0.7:
+			#	random.shuffle(stringBlocks)
 			sweetword = ''.join(stringBlocks[0] + stringBlocks[1] + stringBlocks[2])
 			
 			while sweetword == realpasswd or sweetword in sweetwordset:
