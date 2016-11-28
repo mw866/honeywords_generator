@@ -40,10 +40,10 @@ def generate_sweet_dict( n, real_list, train_list):
 def write_file(sweet_dict, sweet_filename):
     with open(sweet_filename, 'w') as f:
         real_sweet_list_tuple = sweet_dict.items()
-        random.shuffle(real_sweet_list_tuple)
+        # random.shuffle(real_sweet_list_tuple)
 
         for real, sweet_list in real_sweet_list_tuple:
-            f.write(','.join(sweet_list))
+            f.write(real +','+','.join(sweet_list))
             f.write('\n')
             print(real, '==>', sweet_list)
 
