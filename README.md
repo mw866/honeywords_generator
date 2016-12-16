@@ -1,8 +1,7 @@
 
-# CS 5435: Security and Privacy Concepts in the Wild Homework #3
-
-## Github Repo (Private)
-https://github.com/mw866/cs5435_hw3.git
+# Honeywords Generator
+Description: A Python program that generates the "honeywords" proposed in  
+"Honeywords: Making Password-Cracking Detectable," by Ari Juels and Ronald L. Rivest  http://people.csail.mit.edu/rivest/honeywords/
 
 ## Instructions
 
